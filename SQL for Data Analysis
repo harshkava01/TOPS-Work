@@ -1,0 +1,951 @@
+SQL for Data Analytics
+
+Session-1
+Task-
+1.Install MySQL Community Server on your computer and take a screenshot of the MySQL installer completion window.
+ 
+
+3. Write the SQL command to create a new database named food_delivery_db and execute it in your SQL Workbench or DB Browser.<br><br><em><strong>Hint:</strong> Use the CREATE DATABASE statement.</em>
+
+CREATE DATABASE food_delivery_db;
+
+4.List 3 differences between MySQL and PostgreSQL in terms of features or use cases, and give one example of a popular app or company that uses each.
+
+No	My SQL	PostgreSQL
+1	Easy to learn and use	Supports advanced database features.
+2	Commonly used for web applications	Commonly used for complex data processing.
+3	Supports relational and JSON data.	Supports relational, JSON, and advanced data types.
+
+Examples:
+- MySQL: Facebook
+- PostgreSQL: Instagram
+
+
+
+Session-2
+Task
+
+1.Open your SQL editor and run a query to select all columns from a table named restaurants using SELECT * FROM restaurants;.
+
+SELECT * FROM restaurants;
+
+2.Write an SQL query to display only the name and rating columns from the table zomato_reviews.
+
+SELECT name, rating FROM zomato_reviews;
+
+ 
+3. Write an SQL query to select the movie_name and release_year columns from a table called movies, but rename movie_name as 'Title' and release_year as 'Year Released' in the output using the AS keyword.
+
+SELECT movie_name AS 'Title', release_year AS 'Year Released'
+FROM movies;
+
+
+4. In a table called products, write an SQL query that selects all columns and add a comment in your SQL code explaining what the query does.<br><br><em><strong>Hint:</strong> Use -- to write a single-line comment above your query.</em>
+
+-- This query displays all columns and rows from the products table.
+SELECT * FROM products;
+
+
+
+
+Session-3
+Task
+
+1. Write an SQL query to select all restaurants from a table named 'restaurants' where the rating is greater than or equal to 4.5.
+
+SELECT * FROM restaurants
+WHERE rating >= 4.5;
+2. In a table called 'movies', filter and display only the movies released after 2020 and with genre 'Action' using the WHERE clause and AND operator.
+
+SELECT * FROM movies
+WHERE release_year > 2020
+AND genre = 'Action';
+
+
+3. Given a table 'products' with columns (id, name, price, category), write a query to find all products not in the 'Electronics' category or with a price less than 500.
+
+SELECT * FROM products
+WHERE category != 'Electronics'
+   OR price < 500;
+
+
+4. Write an SQL query for a table 'users' to show all users who are NOT from 'Ahmedabad' and have more than 1000 followers.<br><br><em><strong>Hint:</strong> Use the NOT operator combined with AND.</em>
+
+SELECT * FROM users
+WHERE NOT city = 'Ahmedabad'
+AND followers > 1000;
+
+
+
+
+Session-4
+Task
+
+1.Write an SQL query to find all restaurants in a table called Restaurants whose names end with 'Cafe' using the LIKE operator.
+--SELECT * FROM Restaurants
+WHERE name LIKE '%Cafe';
+2. In a Flipkart-style Products table, use the BETWEEN operator to select all products with a price between 500 and 1500 rupees.
+
+SELECT * FROM Products
+WHERE price BETWEEN 500 AND 1500;
+
+3. Write an SQL query to display all users from a Users table whose city is either 'Ahmedabad', 'Surat', or 'Vadodara' using the IN operator.
+
+SELECT * FROM Users
+WHERE city IN ('Ahmedabad', 'Surat', 'Vadodara');
+
+4. Given a table called Songs with columns song_name and artist_name, find all songs where the artist_name contains the letter sequence 'ar' anywhere in the name using the LIKE operator.<br><br><em><strong>Hint:</strong> Use wildcards on both sides of the pattern.</em>
+
+SELECT * FROM Songs
+WHERE artist_name LIKE '%ar%';
+
+Session-5
+Task
+
+1. Write an SQL query using the DISTINCT keyword to find all unique payment methods used in the orders table of a food delivery app database.
+
+SELECT DISTINCT payment_method
+FROM orders;
+
+2. Query the users table to list all cities where users have registered, but display each city only once and sort the result in alphabetical order (A-Z).
+
+SELECT DISTINCT city
+FROM users
+ORDER BY city ASC;
+
+3. Write an SQL query to select the top 5 most recent movie bookings from the bookings table, ordered by booking_date in descending order.
+
+SELECT *
+FROM bookings
+ORDER BY booking_date DESC
+LIMIT 5;
+
+4. From a products table containing Flipkart-style product data (id, name, category, sold_count), write an SQL query to retrieve the 10 products with the highest sold_count, displaying only product name and sold_count, sorted from highest to lowest.<br><br><em><strong>Hint:</strong> Use ORDER BY and LIMIT together to achieve this.</em>
+
+SELECT name, sold_count
+FROM products
+ORDER BY sold_count DESC
+LIMIT 10;
+
+
+
+
+
+Session-6
+Task
+
+1. Write an SQL query using the SUM() function to calculate the total amount spent by users on food orders in a table food_orders (columns: order_id, user_id, amount) — imagine it's like Zomato's order history.
+
+SELECT SUM(amount) AS total_amount_spent
+FROM food_orders;
+
+2. Using the COUNT() function, find out how many songs a user has added to their playlist in a table spotify_playlists (columns: playlist_id, user_id, song_id).
+
+SELECT COUNT(song_id) AS total_songs
+FROM spotify_playlists;
+
+3. Write an SQL query to get the average rating given to a movie in a table bookmyshow_reviews (columns: review_id, movie_id, rating), and round the result to 1 decimal place using the ROUND() function.<br><br><em><strong>Hint:</strong> Use AVG() with ROUND() to format the output.</em>
+
+SELECT ROUND(AVG(rating), 1) AS average_rating
+FROM bookmyshow_reviews;
+
+4. Find the minimum and maximum transaction values for a user from a table paytm_transactions (columns: txn_id, user_id, amount) — show both the smallest and largest transaction amounts.
+SELECT MIN(amount) AS minimum_transaction,
+       MAX(amount) AS maximum_transaction
+FROM paytm_transactions;
+5. Given a table myntra_orders (columns: order_id, user_id, total_price), write an SQL query to display the total number of orders, the average order value (rounded to 2 decimals), and the highest order value for each user_id.<br><br><em><strong>Constraint:</strong> Use GROUP BY to get results per user.</em>
+SELECT
+    user_id,
+    COUNT(order_id) AS total_orders,
+    ROUND(AVG(total_price), 2) AS average_order_value,
+    MAX(total_price) AS highest_order_value
+FROM myntra_orders
+GROUP BY user_id;
+
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-7
+Task
+
+1. Write an SQL query to display the total number of orders placed by each user in a 'food_orders' table, grouped by user_id.
+
+SELECT user_id, COUNT(*) AS total_orders
+FROM food_orders
+GROUP BY user_id;
+
+2. Using a 'transactions' table with columns (transaction_id, user_id, amount, payment_method), write an SQL query to show the total amount spent by each payment_method.
+SELECT payment_method, SUM(amount) AS total_amount
+FROM transactions
+GROUP BY payment_method;
+
+3. Given a 'movies' table with columns (movie_id, genre, box_office_collection), write an SQL query to display each genre and its total box_office_collection, but only show genres where the total collection is above 10 crore.<br><br><em><strong>Hint:</strong> Use GROUP BY and HAVING together to filter the aggregated results.</em>
+
+SELECT genre, SUM(box_office_collection) AS total_collection
+FROM movies
+GROUP BY genre
+HAVING SUM(box_office_collection) > 10;
+
+4. Suppose you have a 'playlist' table with columns (playlist_id, user_id, song_id, duration). Write an SQL query to find users who have created playlists with a combined song duration of more than 2 hours (7200 seconds), showing user_id and total duration.
+
+SELECT user_id, SUM(duration) AS total_duration
+FROM playlist
+GROUP BY user_id
+HAVING SUM(duration) > 7200;
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-8
+Task
+
+1. Create two tables in your SQL database: Users (user_id, username, city) and Orders (order_id, user_id, product, amount). Insert at least 3 users and 5 orders, making sure some users have no orders.
+
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50),
+    city VARCHAR(50)
+);
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    user_id INT,
+    product VARCHAR(50),
+    amount DECIMAL(10,2)
+);
+INSERT INTO Users VALUES
+(1, 'Rahul', 'Ahmedabad'),
+(2, 'Priya', 'Surat'),
+(3, 'Amit', 'Vadodara');
+INSERT INTO Orders VALUES
+(101, 1, 'Pizza', 500),
+(102, 1, 'Burger', 200),
+(103, 2, 'Sandwich', 150),
+(104, 2, 'Pasta', 300),
+(105, 1, 'Fries', 100);
+2. Write an SQL query using INNER JOIN to list all usernames and their ordered products, showing only users who have placed at least one order.
+
+SELECT Users.username, Orders.product
+FROM Users
+INNER JOIN Orders
+ON Users.user_id = Orders.user_id;
+
+3. Write an SQL query using LEFT JOIN to display all usernames along with their ordered products. For users who haven't placed any orders, show NULL for the product.
+
+SELECT Users.username, Orders.product
+FROM Users
+LEFT JOIN Orders
+ON Users.user_id = Orders.user_id;
+
+4. Write an SQL query using RIGHT JOIN to show all orders and the corresponding username for each order. If an order has a user_id that doesn't exist in the Users table, display NULL for the username.<br><br><em><strong>Hint:</strong> Try deleting one user and keeping their order to test this case.</em>
+
+SELECT o.*, u.username
+FROM Orders o
+RIGHT JOIN Users u ON o.user_id = u.user_id;
+
+5. Suppose you want to analyze food delivery data like Zomato. Create a CustomerSegments table (segment_id, segment_name), and link it to Users with a foreign key. Write an SQL query to show each username, their segment name, and total order amount (use JOINs as needed).
+
+CREATE TABLE CustomerSegments (
+    segment_id INT PRIMARY KEY,
+    segment_name VARCHAR(100)
+);
+ALTER TABLE Users
+ADD segment_id INT,
+ADD FOREIGN KEY (segment_id) REFERENCES CustomerSegments(segment_id);
+SELECT u.username, cs.segment_name, SUM(o.total_amount) AS total_order_amount
+FROM Users u
+JOIN CustomerSegments cs ON u.segment_id = cs.segment_id
+JOIN Orders o ON u.user_id = o.user_id
+GROUP BY u.username, cs.segment_name;
+
+
+-------------------------------------------------------------------------------------------------------------------------
+Session-9
+Task
+
+1. Create two tables, influencers and brands, with at least 3 sample rows each. Use a FULL OUTER JOIN to list all influencers and brands, showing influencer_name and brand_name, matching on city. If there is no match, display NULL for the missing side.<br><br><em><strong>Hint:</strong> Use LEFT JOIN, RIGHT JOIN, and UNION if your SQL dialect does not support FULL OUTER JOIN directly.</em>
+
+CREATE TABLE influencers (
+    influencer_id INT PRIMARY KEY,
+    influencer_name VARCHAR(50),
+    city VARCHAR(50)
+);
+CREATE TABLE brands (
+    brand_id INT PRIMARY KEY,
+    brand_name VARCHAR(50),
+    city VARCHAR(50)
+);
+INSERT INTO influencers VALUES
+(1, 'Rahul', 'Ahmedabad'),
+(2, 'Priya', 'Surat'),
+(3, 'Amit', 'Vadodara');
+INSERT INTO brands VALUES
+(1, 'Nike', 'Ahmedabad'),
+(2, 'Puma', 'Mumbai'),
+(3, 'Adidas', 'Surat');
+SELECT i.influencer_name, b.brand_name
+FROM influencers i
+LEFT JOIN brands b ON i.city = b.city
+UNION
+SELECT i.influencer_name, b.brand_name
+FROM influencers i
+RIGHT JOIN brands b ON i.city = b.city;
+
+2. Given a table called playlists with columns (id, playlist_name, parent_playlist_id), write a SELF JOIN query to display each playlist alongside its parent playlist's name, similar to how Spotify might nest playlists.
+
+SELECT 
+    p.playlist_name AS playlist_name,
+    parent.playlist_name AS parent_playlist_name
+FROM playlists p
+LEFT JOIN playlists parent
+ON p.parent_playlist_id = parent.id;
+
+3. Create two tables: users and offers. Write a CROSS JOIN query to generate all possible combinations of users and offers, displaying user_name and offer_title. Explain in a comment how this could be used for a Flipkart-style personalized offer campaign.
+
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    user_name VARCHAR(50)
+);
+CREATE TABLE offers (
+    offer_id INT PRIMARY KEY,
+    offer_title VARCHAR(100)
+);
+INSERT INTO users VALUES
+(1, 'Rahul'),
+(2, 'Priya'),
+(3, 'Amit');
+INSERT INTO offers VALUES
+(101, '10% Discount'),
+(102, 'Free Delivery'),
+(103, 'Special Sale');
+-- CROSS JOIN generates all user-offer combinations
+-- for a Flipkart-style personalized offer campaign.
+SELECT users.user_name, offers.offer_title
+FROM users
+CROSS JOIN offers;
+
+4. You have an employees table with columns (id, name, manager_id). Write a SELF JOIN to display each employee's name along with their manager's name. Then, modify your query to only show employees who do not have a manager (i.e., top-level managers).
+
+SELECT e.name AS employee_name, m.name AS manager_name
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;
+
+5. Use ChatGPT or Copilot to help you write a SQL query that finds all pairs of users from a users table who live in the same city (excluding pairs where the user is compared with themselves). Paste the query and briefly describe how the AI helped you improve or debug it.
+
+SELECT u1.user_id, u1.username, u2.user_id, u2.username, u1.city
+FROM Users u1
+JOIN Users u2 ON u1.city = u2.city
+WHERE u1.user_id < u2.user_id;
+
+Session-10
+Task
+
+1. Create two tables: AppOrders (for orders placed via a food delivery app like Zomato) and InStoreOrders (for direct restaurant orders), each with columns: order_id, customer_name, amount, and order_date. Insert at least 3 sample records into each table.
+
+SELECT e.name AS employee_name,
+       m.name AS manager_name
+FROM employees e
+LEFT JOIN employees m
+ON e.manager_id = m.id;
+
+2. Write a SQL query using UNION to combine all unique customer names from both AppOrders and InStoreOrders tables into a single list.
+
+SELECT customer_name FROM AppOrders
+UNION
+SELECT customer_name FROM InStoreOrders;
+
+3.Write a SQL query using UNION ALL to display every order (including duplicates if any) from both AppOrders and InStoreOrders, showing order_id, customer_name, amount, and order_date.
+
+SELECT order_id, customer_name, amount, order_date
+FROM AppOrders
+UNION ALL
+SELECT order_id, customer_name, amount, order_date
+FROM InStoreOrders;
+
+4. Demonstrate the difference between UNION and UNION ALL by adding a duplicate customer_name in both tables, then running both queries and noting the difference in the result count.<br><br><em><strong>Hint:</strong> UNION removes duplicates, UNION ALL does not.</em>
+
+1. Add a duplicate customer name to both tables
+INSERT INTO AppOrders (order_id, customer_name, amount, order_date)
+VALUES (101, 'Rahul', 500, '2026-10-14');
+INSERT INTO InStoreOrders (order_id, customer_name, amount, order_date)
+VALUES (201, 'Rahul', 700, '2026-10-14');
+
+2. Using UNION (removes duplicate rows)
+SELECT customer_name FROM AppOrders
+UNION
+SELECT customer_name FROM InStoreOrders;
+
+3. Using UNION ALL (keeps duplicate rows)
+SELECT customer_name FROM AppOrders
+UNION ALL
+SELECT customer_name FROM InStoreOrders;
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-11
+Task
+
+1. Write a SQL query to display the names and ratings of restaurants (from a table named Restaurants) where the rating is higher than the average rating of all restaurants in the table.<br><br><em><strong>Hint:</strong> Use a subquery in the WHERE clause to calculate the average rating.</em>
+
+SELECT name, rating
+FROM Restaurants
+WHERE rating > (
+    SELECT AVG(rating)
+    FROM Restaurants
+);
+
+2. In a Flipkart-style Products table (columns: product_id, name, price, category), write a SQL query to list each product name along with the average price of its category as an additional column using a scalar subquery in the SELECT statement.
+
+SELECT
+    name,
+    price,
+    category,
+    (SELECT AVG(p2.price)
+     FROM Products p2
+     WHERE p2.category = p1.category) AS average_category_price
+FROM Products p1;
+3. Given a Playlists table (playlist_id, user_id, playlist_name) and a Users table (user_id, username), write a SQL query using a subquery in the FROM clause to show each username and the number of playlists they have created, displaying only users who have created more playlists than the average number of playlists per user.<br><br><em><strong>Hint:</strong> Use a derived table (subquery in FROM) to count playlists per user, then filter with a subquery in WHERE.</em>
+
+SELECT u.username, p.total_playlists
+FROM Users u
+JOIN (
+    SELECT user_id, COUNT(*) AS total_playlists
+    FROM Playlists
+    GROUP BY user_id
+) p ON u.user_id = p.user_id
+WHERE p.total_playlists > (
+    SELECT AVG(total)
+    FROM (
+        SELECT COUNT(*) AS total
+        FROM Playlists
+        GROUP BY user_id
+    ) AS avg_playlists
+);
+
+4. Suppose you have an Orders table (order_id, user_id, total_amount) for a food delivery app. Write a query to find all user_ids who have placed at least one order with a total_amount greater than the average order amount, using a subquery in the WHERE clause.
+
+SELECT DISTINCT user_id
+FROM Orders
+WHERE total_amount > (
+    SELECT AVG(total_amount)
+    FROM Orders
+);
+
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-12
+Task
+1. Write an SQL query using the WITH clause to create a temporary result set called TopArtists that selects the top 3 most-followed artists from a table SpotifyArtists (columns: artist_id, name, followers), then select all rows from TopArtists.
+
+WITH TopArtists AS (
+    SELECT artist_id, name, followers
+    FROM SpotifyArtists
+    ORDER BY followers DESC
+    LIMIT 3
+)
+SELECT *
+FROM TopArtists;
+
+2. Using a table named FlipkartOrders (columns: order_id, user_id, order_date, total_amount), write a query with a CTE called MonthlyTotals that calculates the total sales amount for each month in 2023, then select the month with the highest total sales from MonthlyTotals.<br><br><em><strong>Hint:</strong> Use EXTRACT(MONTH FROM order_date) or DATE_FORMAT(order_date, '%m') depending on your SQL dialect.</em>
+
+WITH MonthlyTotals AS (
+    SELECT MONTH(order_date) AS month, SUM(total_amount) AS total_sales
+    FROM FlipkartOrders
+    WHERE YEAR(order_date) = 2023
+    GROUP BY MONTH(order_date)
+)
+SELECT *
+FROM MonthlyTotals
+ORDER BY total_sales DESC
+LIMIT 1;
+
+3. Create a recursive CTE to generate a list of dates for the next 7 days starting from today in a table called CalendarDays (columns: day_date).<br><br><em><strong>Hint:</strong> Use UNION ALL inside your CTE and limit recursion to 7 levels.</em>
+
+WITH RECURSIVE CalendarDays AS (
+    SELECT CURDATE() AS day_date
+    UNION ALL
+    SELECT DATE_ADD(day_date, INTERVAL 1 DAY)
+    FROM CalendarDays
+    WHERE day_date < DATE_ADD(CURDATE(), INTERVAL 6 DAY)
+)
+SELECT day_date
+FROM CalendarDays;
+
+4. Given a table called ZomatoRestaurants (columns: id, name, city, rating), use a CTE to find the average rating for each city, then select all restaurants in cities where the average rating is above 4.0.
+
+WITH CityRatings AS (
+    SELECT city, AVG(rating) AS average_rating
+    FROM ZomatoRestaurants
+    GROUP BY city
+)
+SELECT r.*
+FROM ZomatoRestaurants r
+JOIN CityRatings c ON r.city = c.city
+WHERE c.average_rating > 4.0;
+
+5. Use ChatGPT or Copilot to help you write an SQL query with a CTE that, given a table IPLMatches (columns: match_id, team, runs, match_year), calculates the total runs scored by each team in 2023 and lists only teams with more than 2000 runs.
+
+WITH TeamRuns AS (
+    SELECT team, SUM(runs) AS total_runs
+    FROM IPLMatches
+    WHERE match_year = 2023
+    GROUP BY team
+)
+SELECT team, total_runs
+FROM TeamRuns
+WHERE total_runs > 2000;
+
+-------------------------------------------------------------------------------------------------------------------------
+Session-13
+Task
+
+1. 
+Create a table called Orders with columns: order_id, user_id, order_amount, and app_name (e.g., 'Zomato', 'Swiggy', 'Flipkart'). Insert at least 10 sample records with different users and apps. Write an SQL query using the OVER() function to display each order's amount along with the total order amount for all orders.
+
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    user_id INT,
+    order_amount DECIMAL(10,2),
+    app_name VARCHAR(50)
+);
+INSERT INTO Orders VALUES
+(1, 101, 500, 'Zomato'),
+(2, 102, 300, 'Swiggy'),
+(3, 103, 800, 'Flipkart'),
+(4, 101, 250, 'Zomato'),
+(5, 104, 600, 'Swiggy'),
+(6, 102, 400, 'Flipkart'),
+(7, 105, 700, 'Zomato'),
+(8, 103, 350, 'Swiggy'),
+(9, 104, 900, 'Flipkart'),
+(10, 105, 200, 'Zomato');
+SELECT
+    order_id,
+    user_id,
+    order_amount,
+    app_name,
+    SUM(order_amount) OVER() AS total_order_amount
+FROM Orders;
+
+2. Using the Orders table, write an SQL query to show each user's order_id, order_amount, and the average order_amount for that user using the OVER(PARTITION BY user_id) clause.<br><br><em><strong>Hint:</strong> Use AVG(order_amount) OVER(PARTITION BY user_id) to get the per-user average.</em>
+
+SELECT
+    user_id,
+    order_id,
+    order_amount,
+    AVG(order_amount) OVER (PARTITION BY user_id) AS average_order_amount
+FROM Orders;
+
+3. Suppose you have a table called Playlist with columns: song_id, user_id, and duration_sec. Write an SQL query to display each song's duration, and the total duration of songs added by each user using SUM(duration_sec) OVER(PARTITION BY user_id).
+
+SELECT
+    song_id,
+    user_id,
+    duration_sec,
+    SUM(duration_sec) OVER (PARTITION BY user_id) AS total_duration
+FROM Playlist;
+
+4. Given a table named MovieRatings with columns: rating_id, user_id, movie_name, and rating (1-5), write an SQL query to show each rating, the average rating per movie, and the difference between the user's rating and the movie's average rating using window functions.<br><br><em><strong>Hint:</strong> Use AVG(rating) OVER(PARTITION BY movie_name) and subtract it from the user's rating.</em>
+
+SELECT
+    rating_id,
+    user_id,
+    movie_name,
+    rating,
+    AVG(rating) OVER (PARTITION BY movie_name) AS average_rating,
+    rating - AVG(rating) OVER (PARTITION BY movie_name) AS rating_difference
+FROM MovieRatings;
+
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-14
+Task
+
+1. Given a table Orders with columns (order_id, user_id, order_date, total_amount), write an SQL query using ROW_NUMBER() to assign a unique sequential number to each order per user, ordered by order_date descending.
+
+SELECT order_id, user_id, order_date, total_amount,
+       ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY order_date DESC) AS row_num
+FROM Orders;
+
+2. Suppose you have a table called Songs with columns (song_id, artist, streams). Write an SQL query using RANK() to list each song along with its rank based on streams within each artist.
+
+SELECT song_id, artist, streams,
+       RANK() OVER (PARTITION BY artist ORDER BY streams DESC) AS song_rank
+FROM Songs;
+
+3. For a table named Movies with columns (movie_id, genre, rating), write an SQL query using DENSE_RANK() to assign a rank to each movie within its genre based on rating, with the highest rating getting rank 1.
+
+SELECT movie_id, genre, rating,
+       DENSE_RANK() OVER (PARTITION BY genre ORDER BY rating DESC) AS movie_rank
+FROM Movies;
+
+4. Imagine a table named Influencers with columns (id, platform, followers). Write an SQL query to display the top 3 influencers per platform using ROW_NUMBER(), showing id, platform, followers, and their row number.<br><br><em><strong>Hint:</strong> Use a subquery or CTE to filter for row numbers less than or equal to 3.</em>
+
+SELECT id, platform, followers, row_num
+FROM (
+    SELECT id, platform, followers,
+           ROW_NUMBER() OVER (PARTITION BY platform ORDER BY followers DESC) AS row_num
+    FROM Influencers
+) AS RankedInfluencers
+WHERE row_num <= 3;
+
+Session-15
+Task
+
+1. Write an SQL query using the NOW() function to display the current date and time as 'CurrentDateTime' in your result set.
+
+SELECT NOW() AS CurrentDateTime;
+2. Suppose you have a table called Orders with a column order_date (DATE type). Write a query to display each order's order_date, the year, month, and day as separate columns using YEAR(), MONTH(), and DAY().
+
+SELECT
+    order_date,
+    YEAR(order_date) AS Year,
+    MONTH(order_date) AS Month,
+    DAY(order_date) AS Day
+FROM Orders;
+
+3. Imagine you are building a feature like Zomato's order delivery estimate. Given a table Deliveries with a column delivery_date, write a query to show delivery_date and a new column expected_pickup_date which is 2 days before delivery_date using DATE_SUB().
+
+SELECT
+    delivery_date,
+    DATE_SUB(delivery_date, INTERVAL 2 DAY) AS expected_pickup_date
+FROM Deliveries;
+
+4. You have a table called Subscriptions with columns user_id, start_date, and end_date. Write a query to display user_id, start_date, end_date, and the total number of days of each subscription using DATEDIFF().<br><br><em><strong>Hint:</strong> Use DATEDIFF(end_date, start_date) to get the duration.</em>
+
+SELECT
+    user_id,
+    start_date,
+    end_date,
+    DATEDIFF(end_date, start_date) AS total_days
+FROM Subscriptions;
+
+5. Create an SQL query for a table named AppLogins (columns: user_id, last_login_date) to find all users who haven't logged in for more than 30 days from today. Use NOW() and DATEDIFF() in your query.<br><br><em><strong>Constraint:</strong> Only select user_id and last_login_date for users who meet the criteria.</em>
+
+SELECT user_id, last_login_date
+FROM AppLogins
+WHERE DATEDIFF(NOW(), last_login_date) > 30;
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-16
+Task
+
+1. Write an SQL query using CONCAT to combine first_name and last_name columns from a users table into a single full_name column and display the result.
+
+SELECT CONCAT(first_name, ' ', last_name) AS full_name
+FROM users;
+
+2. Given a table called playlists with a column song_title, write a query to display all song titles in uppercase using the UPPER function.
+
+SELECT UPPER(song_title) AS song_title
+FROM playlists;
+
+3. You have a table food_items with a column item_code that sometimes contains extra spaces at the beginning or end. Write an SQL query to select item_code values after removing all leading and trailing spaces using TRIM.
+SELECT TRIM(item_code) AS item_code
+FROM food_items;
+
+4. In a table called movies, the column imdb_id contains codes like 'tt1234567'. Write a query to extract just the numeric part (the last 7 characters) using RIGHT and display it as movie_number.<br><br><em><strong>Hint:</strong> Use RIGHT(imdb_id, 7) to get the numeric part.</em>
+
+SELECT RIGHT(imdb_id, 7) AS movie_number
+FROM movies;
+
+5. A products table has a column sku_code where some entries use dashes (e.g. 'MOB-123-XY'). Write an SQL query to replace all dashes '-' with underscores '_' in sku_code using the REPLACE function and display the updated codes.
+
+SELECT REPLACE(sku_code, '-', '_') AS updated_sku_code
+FROM products;
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-17
+Task
+1. Write an SQL query using CASE WHEN to classify orders in a 'FoodOrders' table as 'Small', 'Medium', or 'Large' based on the total_amount: 'Small' for less than 300, 'Medium' for 300 to 999, and 'Large' for 1000 and above.
+
+SELECT
+    *,
+    CASE
+        WHEN total_amount < 300 THEN 'Small'
+        WHEN total_amount BETWEEN 300 AND 999 THEN 'Medium'
+        ELSE 'Large'
+    END AS order_category
+FROM FoodOrders;
+
+2. Given a 'Movies' table with a 'rating' column (out of 10), write an SQL query that adds a new column 'popularity' which shows 'Blockbuster' for ratings 8 and above, 'Hit' for 5 to 7.9, and 'Average' for below 5 using CASE WHEN ELSE END.
+
+SELECT
+    *,
+    CASE
+        WHEN rating >= 8 THEN 'Blockbuster'
+        WHEN rating >= 5 THEN 'Hit'
+        ELSE 'Average'
+    END AS popularity
+FROM Movies;
+
+3. For a 'FlipkartProducts' table with a 'price' column, write an SQL query to create a 'price_category' column that bins prices as 'Budget' (below 500), 'Standard' (500 to 2000), and 'Premium' (above 2000) using CASE WHEN.
+
+SELECT
+    *,
+    CASE
+        WHEN price < 500 THEN 'Budget'
+        WHEN price BETWEEN 500 AND 2000 THEN 'Standard'
+        ELSE 'Premium'
+    END AS price_category
+FROM FlipkartProducts;
+4. Write an SQL query for a 'SpotifyTracks' table that uses CASE WHEN to assign a 'duration_label' column: 'Short' for tracks under 180 seconds, 'Medium' for 180-300 seconds, and 'Long' for over 300 seconds.<br><br><em><strong>Hint:</strong> Use multiple WHEN conditions to cover all possible durations.</em>
+
+SELECT
+    *,
+    CASE
+        WHEN duration < 180 THEN 'Short'
+        WHEN duration BETWEEN 180 AND 300 THEN 'Medium'
+        ELSE 'Long'
+    END AS duration_label
+FROM SpotifyTracks;
+
+
+Session-18
+Task
+
+1. Create a SQL view named TopRatedRestaurants that selects the restaurant name, average rating, and total number of reviews from a table of Zomato-style restaurant reviews, showing only restaurants with an average rating above 4.0.
+
+CREATE VIEW TopRatedRestaurants AS
+SELECT restaurant_name,
+       AVG(rating) AS average_rating,
+       COUNT(*) AS total_reviews
+FROM ZomatoReviews
+GROUP BY restaurant_name
+HAVING AVG(rating) > 4.0;
+2. Update the TopRatedRestaurants view to also include the city column from the original restaurants table by joining the relevant tables.<br><br><em><strong>Hint:</strong> Use an INNER JOIN to combine data from both tables in your view definition.</em>
+
+CREATE OR REPLACE VIEW TopRatedRestaurants AS
+SELECT r.restaurant_name,
+       r.city,
+       AVG(rv.rating) AS average_rating,
+       COUNT(*) AS total_reviews
+FROM Restaurants r
+INNER JOIN ZomatoReviews rv
+    ON r.restaurant_id = rv.restaurant_id
+GROUP BY r.restaurant_id, r.restaurant_name, r.city
+HAVING AVG(rv.rating) > 4.0;
+
+3. Try to update the average rating column directly through the TopRatedRestaurants view and observe what error or limitation occurs. Write down the exact error message and explain why this happens based on SQL view limitations.
+
+1. Try to update the average rating
+UPDATE TopRatedRestaurants
+SET average_rating = 5.0
+WHERE restaurant_name = 'Pizza House';
+
+2. Error message
+ERROR 1288 (HY000): The target table TopRatedRestaurants
+of the UPDATE is not updatable
+
+
+4. Create a view called DailyOrderSummary that shows, for each date, the total number of food orders and the total revenue from a Swiggy-style orders table. Ensure the view only includes dates from the last 30 days.<br><br><em><strong>Constraint:</strong> Use WHERE and GROUP BY clauses in your view definition.</em>
+
+CREATE VIEW DailyOrderSummary AS
+SELECT DATE(order_date) AS order_day,
+       COUNT(*) AS total_orders,
+       SUM(total_amount) AS total_revenue
+FROM Orders
+WHERE order_date >= CURDATE() - INTERVAL 30 DAY
+GROUP BY DATE(order_date);
+
+5. List 3 good practices you should follow when creating SQL views for analytics dashboards, and for each, give a one-line example related to a Flipkart sales reporting scenario.
+
+1. Use meaningful names: Create a view named FlipkartDailySales to show daily sales revenue using SUM(total_amount).
+2. Filter unnecessary data: Use WHERE order_date >= '2026-01-01' to display only recent Flipkart orders.
+3. Avoid duplicate calculations: Create a view that calculates SUM(total_amount) grouped by category so the dashboard can reuse the sales totals.
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-19
+Task
+
+1. Run a SELECT query on a large 'orders' table (at least 10,000 rows) to find all orders for a specific user_id and measure the query execution time.
+SET profiling = 1;
+SELECT *
+FROM orders
+WHERE user_id = 101;
+SHOW PROFILES;
+
+2. Create an index on the user_id column of the 'orders' table and re-run the same SELECT query to measure the new execution time.<br><br><em><strong>Hint:</strong> Use CREATE INDEX idx_user_id ON orders(user_id); and compare the times before and after.</em>
+
+--1: Create an index
+CREATE INDEX idx_user_id
+ON orders(user_id);
+--2: Run the SELECT query again
+SET profiling = 1;
+SELECT *
+FROM orders
+WHERE user_id = 101;
+SHOW PROFILES;
+
+-- 3: Compare execution times
+Before index: 0.015 seconds 
+After index: 0.005 seconds
+Result: The query executes faster after creating the index on user_id.
+
+3. Use the EXPLAIN PLAN command to analyze how your SELECT query runs before and after adding the index, and write down the key differences you observe in the output.
+
+--1: Analyze the query before adding the index
+EXPLAIN SELECT * FROM orders
+WHERE user_id = 101;
+--2 Create the index
+CREATE INDEX idx_user_id
+ON orders(user_id);
+-- 3: Analyze the query after adding the index
+EXPLAIN SELECT * FROM orders
+WHERE user_id = 101;
+-- 4: Key Differences
+Before Index	After Index
+MySQL may use a full table scan (type = ALL).	MySQL may use an index lookup (type = ref).
+Examines more rows.	May examine fewer rows.
+Usually slower for selective searches on large tables.	Usually faster for selective searches.
+key may show NULL.	key may show idx_user_id.
+
+4. Write a query for a 'products' table that avoids a full table scan by using an index on the 'category' column to fetch all products in a specific category.
+
+-- 1: Create an index on the category column
+CREATE INDEX idx_category
+ON products(category);
+-- 2: Fetch products from a specific category
+SELECT * FROM products
+WHERE category = 'Electronics';
+-- 3: Check whether the index is used
+EXPLAIN SELECT * FROM products
+WHERE category = 'Electronics';
+5. Suppose your SELECT query on the 'orders' table is still slow even after adding an index. Use EXPLAIN PLAN and research at least one more optimization technique (other than indexing) using an AI tool like ChatGPT or Copilot, and describe how you would apply it.
+
+-- 1. Use EXPLAIN to analyze the query
+EXPLAIN SELECT * FROM orders
+WHERE user_id = 101;
+-- 2. Optimization technique: Select only required columns
+Before optimization:
+SELECT * FROM orders
+WHERE user_id = 101;
+After optimization:
+SELECT order_id, order_date, total_amount 
+FROM orders
+WHERE user_id = 101;
+-- 3. How this improves performance
+•	Reduces the amount of data retrieved from the database.
+•	Reduces data transfer between MySQL and the application.
+•	Can improve performance when the table contains many columns or large data values.
+
+
+--------------------------------------------------------------------------------------------------------------------------
+Session-20
+Task
+
+
+SELECT * FROM ipl_matches
+WHERE team1 = 'Mumbai Indians'
+OR team2 = 'Mumbai Indians';
+3.
+1.Download a sample IPL match data CSV file and load it into a new SQL table called ipl_matches using your preferred SQL tool (MySQL Workbench, DBeaver, or Azure Data Studio).
+2.Write a SQL query to select all matches where the team 'Mumbai Indians' played, then export the query results as a CSV file named mi_matches.csv.
+3.Connect Microsoft Excel to your SQL database and import the ipl_matches table. Create a simple table in Excel that shows the total matches played by each team.
+4.Connect Power BI Desktop to your SQL database, import the ipl_matches table, and create a pivot chart showing the number of wins for each team.
+5.Use Python (with pandas and sqlalchemy) to read the mi_matches.csv file, filter matches where 'Mumbai Indians' won, and insert those rows into a new SQL table called mi_wins.<br><br><em><strong>Hint:</strong> Use pandas.read_csv(), DataFrame filtering, and to_sql() for this task.</em>
+
+
+Answer
+
+CREATE DATABASE ipl_project;
+USE ipl_project;
+
+CREATE TABLE ipl_matches (
+ id INT,
+ season INT,
+ match_date DATE,
+ team1 VARCHAR(100),
+ team2 VARCHAR(100),
+ winner VARCHAR(100),
+ venue VARCHAR(200)
+);
+
+SELECT COUNT(*) AS total_matches
+FROM ipl_matches;
+SELECT * FROM ipl_matches
+LIMIT 10;
+
+
+SELECT * FROM ipl_matches
+WHERE team1 = 'Mumbai Indians'
+OR team2 = 'Mumbai Indians';
+
+SELECT * FROM ipl_matches
+WHERE 'Mumbai Indians' IN (team1, team2);
+
+
+SELECT team, COUNT(*) AS matches_played
+FROM (
+ SELECT team1 AS team FROM ipl_matches
+ UNION ALL
+ SELECT team2 AS team FROM ipl_matches
+) AS all_teams
+GROUP BY team
+ORDER BY matches_played DESC;
+
+
+SELECT winner AS team, COUNT(*) AS total_wins
+FROM ipl_matches
+WHERE winner IS NOT NULL
+AND winner <> ''
+GROUP BY winner
+ORDER BY total_wins DESC;
+
+
+Session-23
+Task
+
+1.Write an SQL query to find the top 5 highest-rated restaurants in Koramangala, showing their name, average rating, and number of votes.
+2.Using the Zomato Bangalore dataset, create an SQL query that lists all unique cuisines available in Indiranagar along with the count of restaurants offering each cuisine.
+3.Write an SQL query to calculate the average cost for two people for each restaurant type (such as 'Cafe', 'Casual Dining', etc.) and order the results from most to least expensive.
+4.Find all restaurants that have a rating below 3.0 but more than 200 votes, and suggest a possible marketing action for these based on your findings.<br><br><em><strong>Hint:</strong> Think about discounts, partnerships, or events to improve ratings or attract new customers.</em>
+5.Use ChatGPT to generate an SQL query that segments restaurants into three market categories: 'Budget' (cost for two < 500), 'Mid-range' (500-1500), and 'Premium' (>1500). Test and run the query on your dataset, and paste the working query in your submission.
+
+Answer
+
+SELECT name,
+AVG(CAST(rate AS DECIMAL(3,1))) AS average_rating,
+SUM(votes) AS total_votes
+FROM restaurants
+WHERE location LIKE '%Koramangala%'
+AND rate IS NOT NULL
+AND rate REGEXP '^[0-5](\\.[0-9])?$'
+GROUP BY name
+ORDER BY average_rating DESC, total_votes DESC
+LIMIT 5;
+
+SELECT cuisine,
+COUNT(DISTINCT restaurant_id) AS restaurant_count
+FROM restaurant_cuisines
+WHERE location = 'Indiranagar'
+GROUP BY cuisine
+ORDER BY restaurant_count DESC;
+
+SELECT
+    rest_type,
+    ROUND(
+        AVG(
+            CAST(
+                REPLACE(
+                    REPLACE(
+                        `approx_cost(for two people)`,
+                        ',', ''
+                    ),
+                    '₹', ''
+                ) AS DECIMAL(10,2)
+            )
+        ),
+        2
+    ) AS average_cost_for_two
+FROM restaurants
+WHERE rest_type IS NOT NULL
+AND `approx_cost(for two people)` IS NOT NULL
+AND TRIM(`approx_cost(for two people)`) REGEXP '^[₹]?[0-9,]+$'
+GROUP BY rest_type
+ORDER BY average_cost_for_two DESC;
+
+SELECT name, location,
+CAST(rate AS DECIMAL(3,1)) AS rating,
+votes, rest_type, cuisines
+FROM restaurants
+WHERE rate REGEXP '^[0-5](\\.[0-9])?$'
+AND CAST(rate AS DECIMAL(3,1)) < 3.0
+AND votes > 200
+ORDER BY votes DESC, rating ASC;
+
